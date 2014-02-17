@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/goliatone/grunt-gconfig.png)](http://travis-ci.org/goliatone/grunt-gconfig)
+[![Build Status](https://travis-ci.org/goliatone/grunt-gconfig.png?branch=master)](https://travis-ci.org/goliatone/grunt-gconfig)
 
 # grunt-gconfig
 
