@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,     // Enable dynamic expansion.
                         cwd: 'test/fixtures',      // Src matches are relative to this path.
-                        src: ['*.html'], // Actual pattern(s) to match.
+                        src: ['index.dev.html'], // Actual pattern(s) to match.
                         dest: 'tmp',   // Destination path prefix.
                         // ext: '.min.html',   // Dest filepaths will have this extension.
                     },
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,     // Enable dynamic expansion.
                         cwd: 'test/fixtures',      // Src matches are relative to this path.
-                        src: ['*.html'], // Actual pattern(s) to match.
+                        src: ['index.dist.html'], // Actual pattern(s) to match.
                         dest: 'tmp',   // Destination path prefix.
                         // ext: '.min.html',   // Dest filepaths will have this extension.
                     },
