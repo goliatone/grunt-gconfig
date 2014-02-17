@@ -1,7 +1,13 @@
+[![Build Status](https://secure.travis-ci.org/goliatone/grunt-gconfig.png)](http://travis-ci.org/goliatone/grunt-gconfig)
+
 # grunt-gconfig
 
 > Grunt task for generating HTML metadata configuration options for gconfig
 
+## GConfig
+[GConfig][1] is a simple configuration management library.
+
+[1]:(https://github.com/goliatone/gconfig)
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
