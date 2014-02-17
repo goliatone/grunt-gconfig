@@ -32,7 +32,9 @@ exports.gconfig = {
 
         var actual = grunt.file.read('tmp/index.dev.html');
         var expected = grunt.file.read('test/expected/index.dev.html');
-        test.equal(actual, expected, 'should describe what the default behavior is.');
+        test.equal(actual.replace(/ +?/g, ''),
+                   expected.replace(/ +?/g, ''),
+                   'should describe what the default behavior is.');
 
         test.done();
     },
@@ -41,7 +43,9 @@ exports.gconfig = {
 
         var actual = grunt.file.read('tmp/index.dist.html');
         var expected = grunt.file.read('test/expected/index.dist.html');
-        test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+        test.equal(actual.replace(/ +?/g, ''),
+                   expected.replace(/ +?/g, ''),
+                   'should describe what the custom option(s) behavior is.');
 
         test.done();
     },
