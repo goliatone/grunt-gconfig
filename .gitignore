@@ -62,6 +62,6 @@ node_modules
 ### SublimeText
 
 # SublimeText project files
-*.sublime-workspace
+*.sublime-*
 
 
