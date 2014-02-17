@@ -1,0 +1,12 @@
+{
+	"platform":{
+		"ip":"10.0.2.135",
+		"port":"9000",
+		"endpoint":"ws/cs/endpoint",
+		"clientid":"wits",
+		"useridid":"goliatone"
+	},
+	"app":{
+		"endpoint":"ws://{{ip}}:{{port}}/{{endpoint}}/{{clientid}}/{{useridid}}"
+	}
+}

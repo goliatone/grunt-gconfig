@@ -1,0 +1,9 @@
+{
+	"platform":{
+		"ip":"localhost",
+		"port":"9000"
+	},
+	"app":{
+		"endpoint":"ws://{{ip}}:{{port}}"
+	}
+}
