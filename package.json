@@ -1,7 +1,7 @@
 {
   "name": "grunt-gconfig",
   "description": "Grunt task for generating HTML metadata configuration options for gconfig",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/goliatone/grunt-gconfig",
   "author": {
     "name": "goliatone",
