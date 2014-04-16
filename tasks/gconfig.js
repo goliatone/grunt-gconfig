@@ -8,38 +8,38 @@
 
 'use strict';
 
-var _stylize = function(word, style){ 
+var _stylize = function(word, style){
     var styles = {
-      //styles
-      'bold'      : ['\x1B[1m',  '\x1B[22m'],
-      'italic'    : ['\x1B[3m',  '\x1B[23m'],
-      'underline' : ['\x1B[4m',  '\x1B[24m'],
-      'inverse'   : ['\x1B[7m',  '\x1B[27m'],
-      'strikethrough' : ['\x1B[9m',  '\x1B[29m'],
-      //text colors
-      //grayscale
-      'white'     : ['\x1B[37m', '\x1B[39m'],
-      'grey'      : ['\x1B[90m', '\x1B[39m'],
-      'black'     : ['\x1B[30m', '\x1B[39m'],
-      //colors
-      'blue'      : ['\x1B[34m', '\x1B[39m'],
-      'cyan'      : ['\x1B[36m', '\x1B[39m'],
-      'green'     : ['\x1B[32m', '\x1B[39m'],
-      'magenta'   : ['\x1B[35m', '\x1B[39m'],
-      'red'       : ['\x1B[31m', '\x1B[39m'],
-      'yellow'    : ['\x1B[33m', '\x1B[39m'],
-      //background colors
-      //grayscale
-      'whiteBG'     : ['\x1B[47m', '\x1B[49m'],
-      'greyBG'      : ['\x1B[49;5;8m', '\x1B[49m'],
-      'blackBG'     : ['\x1B[40m', '\x1B[49m'],
-      //colors
-      'blueBG'      : ['\x1B[44m', '\x1B[49m'],
-      'cyanBG'      : ['\x1B[46m', '\x1B[49m'],
-      'greenBG'     : ['\x1B[42m', '\x1B[49m'],
-      'magentaBG'   : ['\x1B[45m', '\x1B[49m'],
-      'redBG'       : ['\x1B[41m', '\x1B[49m'],
-      'yellowBG'    : ['\x1B[43m', '\x1B[49m']
+        //styles
+        'bold'      : ['\x1B[1m',  '\x1B[22m'],
+        'italic'    : ['\x1B[3m',  '\x1B[23m'],
+        'underline' : ['\x1B[4m',  '\x1B[24m'],
+        'inverse'   : ['\x1B[7m',  '\x1B[27m'],
+        'strikethrough' : ['\x1B[9m',  '\x1B[29m'],
+        //text colors
+        //grayscale
+        'white'     : ['\x1B[37m', '\x1B[39m'],
+        'grey'      : ['\x1B[90m', '\x1B[39m'],
+        'black'     : ['\x1B[30m', '\x1B[39m'],
+        //colors
+        'blue'      : ['\x1B[34m', '\x1B[39m'],
+        'cyan'      : ['\x1B[36m', '\x1B[39m'],
+        'green'     : ['\x1B[32m', '\x1B[39m'],
+        'magenta'   : ['\x1B[35m', '\x1B[39m'],
+        'red'       : ['\x1B[31m', '\x1B[39m'],
+        'yellow'    : ['\x1B[33m', '\x1B[39m'],
+        //background colors
+        //grayscale
+        'whiteBG'     : ['\x1B[47m', '\x1B[49m'],
+        'greyBG'      : ['\x1B[49;5;8m', '\x1B[49m'],
+        'blackBG'     : ['\x1B[40m', '\x1B[49m'],
+        //colors
+        'blueBG'      : ['\x1B[44m', '\x1B[49m'],
+        'cyanBG'      : ['\x1B[46m', '\x1B[49m'],
+        'greenBG'     : ['\x1B[42m', '\x1B[49m'],
+        'magentaBG'   : ['\x1B[45m', '\x1B[49m'],
+        'redBG'       : ['\x1B[41m', '\x1B[49m'],
+        'yellowBG'    : ['\x1B[43m', '\x1B[49m']
     };
     if(! style in styles) return word;
     return styles[style][0] + word + styles[style][1];
@@ -61,16 +61,59 @@ module.exports = function(grunt) {
         });
 
         var cwd = process.cwd();
-        
+
         grunt.log.writeln('\n', desc, 'total files:', this.files.length);
         grunt.log.writeln('--------------------------------------------');
-        
+
         var metadata,
             data,
             parser = new MetadataParser(),
             filepath = this.data.gconfig,
             removeOriginalUnmatchedMeta = this.data.removeOriginalUnmatchedMeta,
+            mergeObject = {},
+            mergeConfigs = this.data.mergeConfigs || [],
+            mergeFiles   = this.data.mergeFiles || [],
             gconfig = grunt.file.readJSON(path.join(cwd, filepath));
+
+        /*
+         * mergeConfigs is an object holding
+         * id references to `grunt` config
+         * objects.
+         */
+        mergeConfigs.forEach(function(id){
+            var value,
+                toMerge = {},
+                config = grunt.config.get(id);
+
+            grunt.log.writeln( _stylize('\n+ Merging config object', 'yellow'), _stylize(id, 'yellowBG'));
+
+            Object.keys(config).forEach(function(key){
+                value = config[key];
+                if(typeof value === 'object') value = JSON.stringify(value);
+                grunt.log.writeln('  -', key, ':', value);
+                toMerge[key] = value;
+            });
+            mergeObject[id] = extend(config, toMerge);
+        });
+
+        /*
+         * mergeFiles is an object holding
+         * paths to files that will be merged
+         * like a normal ENV config file.
+         */
+        mergeFiles.forEach(function(path){
+            var value,
+                toMerge = {},
+                config = grunt.file.readJSON(path);
+
+            grunt.log.writeln( _stylize('\n+ Merging config file', 'yellow'), _stylize(path, 'yellowBG'));
+
+            Object.keys(config).forEach(function(key){
+                value = config[key];
+                grunt.log.writeln('  -', key, ':', value);
+                mergeObject[key] = value;
+            });
+        });
 
         this.files.forEach(function(file) {
             var contents = file.src.filter(function(filepath) {
@@ -84,7 +127,7 @@ module.exports = function(grunt) {
                 parsedHTML = $.load(fileContent),
                 defaults = parser.extractMetadata($('meta'));
 
-                data = extend({}, defaults, gconfig);
+                data = extend({}, defaults, gconfig, mergeObject);
                 metadata = parser.buildMetadata(data);
 
                 var htmlMeta = parsedHTML('meta');
@@ -116,13 +159,13 @@ module.exports = function(grunt) {
                     });
                 }
                 else{
-                    grunt.log.writeln('- Creating HTML metadata for ', _stylize(filepath, 'greenBG'));
+                    grunt.log.writeln('\n- Creating HTML metadata for ', _stylize(filepath, 'greenBG'));
                     Object.keys(metadata).forEach(function(name){
                         if(name !== 'html') grunt.log.writeln('  √ Created meta:', name, 'content:', _stylize(metadata[name].content, 'green'));
                     });
                     parsedHTML('head').append($(metadata.html.join('\n')));
                 }
-                
+
                 var outputHTML = parsedHTML.html();
                 // Write joined contents to destination filepath.
                 grunt.file.write(file.dest, outputHTML);

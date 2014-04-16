@@ -30,6 +30,7 @@ module.exports = function(grunt) {
 
         // Configuration to be run (and then tested).
         gconfig: {
+
             dev:{
                 // src:['app/*.html'],
                 files: [
@@ -38,10 +39,13 @@ module.exports = function(grunt) {
                         cwd: 'test/fixtures',      // Src matches are relative to this path.
                         src: ['index.dev.html'], // Actual pattern(s) to match.
                         dest: 'tmp',   // Destination path prefix.
-                        // ext: '.min.html',   // Dest filepaths will have this extension.
                     },
                 ],
                 gconfig:'test/fixtures/gconfig.dev.json',
+                mergeConfigs:['gconfigMergeGrunt'], //SEE BELOW!
+                mergeFiles:[
+                    'test/fixtures/gconfig.merge.json'
+                ],
                 removeOriginalUnmatchedMeta:true
             },
             dist:{
@@ -52,17 +56,24 @@ module.exports = function(grunt) {
                         cwd: 'test/fixtures',      // Src matches are relative to this path.
                         src: ['index.dist.html'], // Actual pattern(s) to match.
                         dest: 'tmp',   // Destination path prefix.
-                        // ext: '.min.html',   // Dest filepaths will have this extension.
                     },
+                ],
+                mergeFiles:[
+                    'test/fixtures/gconfig.merge.json'
                 ],
                 gconfig:'test/fixtures/gconfig.dist.json',
                 removeOriginalUnmatchedMeta:false
-            }            
+            }
         },
         // Unit tests.
         nodeunit: {
             tests: ['test/*_test.js'],
         },
+        //We are going to merge this Object in final gconfig!
+        gconfigMergeGrunt:{
+            foo:'bar',
+            baz:'fuz'
+        }
     });
 
     // Actually load this plugin's task(s).
