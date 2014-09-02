@@ -5,7 +5,7 @@
 > Grunt task for generating HTML metadata configuration options for gconfig
 
 ## GConfig
-[GConfig][1] is a simple configuration management library. This task provides a way to manage environment aware configuration options.
+[GConfig][gconfig] is a simple configuration management library. This task provides a way to manage environment aware configuration options.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -42,14 +42,23 @@ grunt.initConfig({
     },
     dev:{
       filepath:'app/data/gconfig.dev.json',
-      removeOriginalUnmatchedMeta:true
+      removeOriginalUnmatchedMeta:true,
+      mergeFiles:[
+        'test/fixtures/gconfig.defaults.json'
+      ]
     },
     int:{
-      filepath:'app/data/gconfig.int.json'
+      filepath:'app/data/gconfig.int.json',
+      mergeConfigs:['gconfigMergeGrunt']
     },
     dist:{
-      filepath:'app/data/gconfig.dist.json'
+      filepath:'app/data/gconfig.dist.json',
+      mergeConfigs:['gconfigMergeGrunt']
     }
+  },
+  gconfigMergeGrunt:{
+    foo:'bar',
+    baz:'fuz'
   }
 });
 ```
@@ -83,7 +92,7 @@ Should we remove original metadata tags before running the task?
 #### options.files
 Type: `String`
 
-Targeted files by the task. For more details check out [grunt files][2]
+Targeted files by the task. For more details check out [grunt files][grunt.files]
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
@@ -93,6 +102,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 - Add examples
 - Refactor main task!
 
-[1]:(https://github.com/goliatone/gconfig)
-[2]:(http://gruntjs.com/configuring-tasks#files)
-[grunt.config]:(http://gruntjs.com/api/grunt.config#grunt.config.get)
+[gconfig]: https://github.com/goliatone/gconfig
+[grunt.files]: http://gruntjs.com/configuring-tasks#files
+[grunt.config]: http://gruntjs.com/api/grunt.config#grunt.config.get
