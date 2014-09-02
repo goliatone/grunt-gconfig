@@ -9,19 +9,7 @@
 'use strict';
 
 var _stylize = require('../lib/stylize');
-
-module.exports = function(grunt) {
-    var MetadataParser = require('../lib/metadata'),
-        extend = require('../lib/utils').extend,
-        path = require('path'),
-        $ = require('cheerio');
-
-    var u = require('util');
-    var desc = 'Process Gconfig metadata';
-
-    grunt.registerMultiTask('gconfig', desc, function() {
-        // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options({
+var DEFAULTS = {files:{
             expand: true,     // Enable dynamic expansion.
             cwd: 'app/',      // Src matches are relative to this path.
             src: ['*.html'], // Actual pattern(s) to match.
@@ -29,11 +17,21 @@ module.exports = function(grunt) {
             removeOriginalUnmatchedMeta:false,
             mergeConfigs:[],
             mergeFiles:[]
-        });
+        }};
+
+module.exports = function(grunt) {
+    var MetadataParser = require('../lib/metadata'),
+        extend = require('../lib/utils').extend,
+        path = require('path'),
+        $ = require('cheerio');
 
 
-        grunt.log.writeln(u.inspect(options, { showHidden: true, depth: null }));
-        grunt.log.writeln(u.inspect(this.data, { showHidden: true, depth: null }));
+    var desc = 'Process Gconfig metadata';
+
+    grunt.registerMultiTask('gconfig', desc, function() {
+        // Merge task-specific and/or target-specific options with these defaults.
+        var options = this.options(DEFAULTS);
+
         /*
          * this.data holds the data stored in the current target.
          * options holds ^defaults and the user declared options object.
@@ -50,8 +48,9 @@ module.exports = function(grunt) {
             filepath = options.filepath || options.gconfig,
             removeOriginalUnmatchedMeta = options.removeOriginalUnmatchedMeta,
             mergeObject = {},
-            mergeConfigs = options.mergeConfigs,
-            mergeFiles   = options.mergeFiles,
+            //TODO: this two should be configured from defaults?!
+            mergeConfigs = options.mergeConfigs || [],
+            mergeFiles   = options.mergeFiles || [],
             gconfig = grunt.file.readJSON(path.join(cwd, filepath));
 
         /*
