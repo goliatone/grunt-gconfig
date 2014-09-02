@@ -56,50 +56,34 @@ grunt.initConfig({
 
 ### Options
 
+#### options.mergeConfigs
+Type: `Array`
+Default value: `[]`
+
+Array holding attribute names of the `grunt.config` object. This configuration object will be merged into the final `gconfig` object.
+Internally, it uses `grunt.config.get(<id>)`, read more [here][grunt.config].
+
+#### options.mergeFiles
+Type: `Array`
+Default value: `[]`
+
+Array holding paths to JSON files we want to merge into our final object. 
+
+#### options.filepath
+Type: `String`
+
+A path string to the JSON data file holding the configuration values.
+
+#### options.removeOriginalUnmatchedMeta
+Type: `Boolean`
+Default value: `false`
+
+Should we remove original metadata tags before running the task?
+
 #### options.files
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  gconfig: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  gconfig: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+Targeted files by the task. For more details check out [grunt files][2]
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
@@ -110,3 +94,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 - Refactor main task!
 
 [1]:(https://github.com/goliatone/gconfig)
+[2]:(http://gruntjs.com/configuring-tasks#files)
+[grunt.config]:(http://gruntjs.com/api/grunt.config#grunt.config.get)
