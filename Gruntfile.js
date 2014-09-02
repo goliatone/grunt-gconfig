@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                         dest: 'tmp',   // Destination path prefix.
                     },
                 ],
-                gconfig:'test/fixtures/gconfig.dev.json',
+                filepath:'test/fixtures/gconfig.dev.json',
                 mergeConfigs:['gconfigMergeGrunt'], //SEE BELOW!
                 mergeFiles:[
                     'test/fixtures/gconfig.merge.json'
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
                 mergeFiles:[
                     'test/fixtures/gconfig.merge.json'
                 ],
-                gconfig:'test/fixtures/gconfig.dist.json',
+                filepath:'test/fixtures/gconfig.dist.json',
                 removeOriginalUnmatchedMeta:false
             }
         },
