@@ -61,6 +61,7 @@ module.exports = function(grunt) {
         mergeConfigs.forEach(function(id){
             var value,
                 toMerge = {},
+                //TODO: Ensure we got a valid object!!
                 config = grunt.config.get(id);
 
             grunt.log.writeln( _stylize('\n+ Merging config object', 'yellow'), _stylize(id, 'yellowBG'));
