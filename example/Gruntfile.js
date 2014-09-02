@@ -12,6 +12,17 @@ module.exports = function (grunt) {
 
   var config = {};
 
+  /*
+   * We are going to merge this Object in final gconfig!
+   * Look in tasks/options/gconfig.js for the reference.
+   * Its included as:
+   * `mergeConfigs:['gconfigMergeGrunt']`
+   */
+  config.gconfigMergeGrunt ={
+    foo:'bar',
+    baz:'fuz'
+  };
+
   /**
    * Load configuration files.
    * Each file will be mapped to a property
