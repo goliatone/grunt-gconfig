@@ -1,0 +1,17 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "description": "grunt-gconfig example",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "author": "goliatone <hello@goliatone.com> (http://goliatone.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "~0.1.9",
+    "grunt-gconfig": "^0.1.2",
+    "load-grunt-task-options": "^1.0.0"
+  }
+}

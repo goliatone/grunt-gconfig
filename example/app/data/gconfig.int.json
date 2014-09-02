@@ -1,0 +1,17 @@
+{
+	"platform": {
+		"ip": "10.0.1.88",
+		"port": "9000",
+		"endpoint": "api/v3",
+		"clientid": "3d3929as8",
+		"exhibitid": "gconfig-test"
+	},
+	"client": {
+		"endpoint": "ws://@{platform.ip}:@{platform.port}/@{platform.endpoint}/@{platform.clientid}/@{platform.exhibitid}"
+	},
+	"api": {
+		"url": "http://@{platform.ip}:@{platform.port}/exhibits/control",
+		"id": "@{platform.exhibitid}",
+		"action": "next"
+	}
+}
