@@ -4,12 +4,16 @@ module.exports = {
             expand: true,
             cwd: 'app/',
             src: ['*.html'],
-            dest: '.tmp/'
+            dest: 'output/'
         }, ],
     },
     dev: {
         filepath: 'app/data/gconfig.dev.json',
-        removeOriginalUnmatchedMeta: true
+        removeOriginalUnmatchedMeta: true,
+        mergeFiles:[
+            'app/data/gconfig.defaults.json'
+        ],
+        mergeConfigs:['gconfigMergeGrunt']
     },
     int: {
         filepath: 'app/data/gconfig.int.json'
