@@ -12,17 +12,6 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        jshint: {
-            all: [
-                'Gruntfile.js',
-                'tasks/*.js',
-                '<%= nodeunit.tests %>',
-            ],
-            options: {
-                jshintrc: '.jshintrc',
-            },
-        },
-
         // Before generating any new files, remove any previously-created files.
         clean: {
             tests: ['tmp'],
@@ -55,7 +44,7 @@ module.exports = function(grunt) {
                         dest: 'tmp',   // Destination path prefix.
                     },
                 ],
-                gconfig:'test/fixtures/gconfig.dev.json',
+                filepath:'test/fixtures/gconfig.dev.json',
                 mergeConfigs:['gconfigMergeGrunt'], //SEE BELOW!
                 mergeFiles:[
                     'test/fixtures/gconfig.merge.json'
@@ -75,7 +64,7 @@ module.exports = function(grunt) {
                 mergeFiles:[
                     'test/fixtures/gconfig.merge.json'
                 ],
-                gconfig:'test/fixtures/gconfig.dist.json',
+                filepath:'test/fixtures/gconfig.dist.json',
                 removeOriginalUnmatchedMeta:false
             }
         },
@@ -104,5 +93,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['clean', 'gconfig', 'nodeunit']);
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['test']);
 };

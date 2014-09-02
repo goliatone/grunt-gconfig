@@ -5,9 +5,8 @@
 > Grunt task for generating HTML metadata configuration options for gconfig
 
 ## GConfig
-[GConfig][1] is a simple configuration management library.
+[GConfig][gconfig] is a simple configuration management library. This task provides a way to manage environment aware configuration options.
 
-[1]:(https://github.com/goliatone/gconfig)
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
@@ -32,64 +31,77 @@ In your project's Gruntfile, add a section named `gconfig` to the data object pa
 grunt.initConfig({
   gconfig: {
     options: {
-      // Task-specific options go here.
+      files: [
+        {
+          expand: true,    // Enable dynamic expansion.
+          cwd: 'app/',     // Src matches are relative to this path.
+          src: ['*.html'], // Actual pattern(s) to match.
+          dest: '.tmp/'    // Destination path prefix.
+        },
+      ]
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    dev:{
+      filepath:'app/data/gconfig.dev.json',
+      removeOriginalUnmatchedMeta:true,
+      mergeFiles:[
+        'test/fixtures/gconfig.defaults.json'
+      ]
     },
+    int:{
+      filepath:'app/data/gconfig.int.json',
+      mergeConfigs:['gconfigMergeGrunt']
+    },
+    dist:{
+      filepath:'app/data/gconfig.dist.json',
+      mergeConfigs:['gconfigMergeGrunt']
+    }
   },
-})
+  gconfigMergeGrunt:{
+    foo:'bar',
+    baz:'fuz'
+  }
+});
 ```
 
 ### Options
 
-#### options.separator
+#### options.mergeConfigs
+Type: `Array`
+Default value: `[]`
+
+Array holding attribute names of the `grunt.config` object. This configuration object will be merged into the final `gconfig` object.
+Internally, it uses `grunt.config.get(<id>)`, read more [here][grunt.config].
+
+#### options.mergeFiles
+Type: `Array`
+Default value: `[]`
+
+Array holding paths to JSON files we want to merge into our final object. 
+
+#### options.filepath
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+A path string to the JSON data file holding the configuration values.
 
-#### options.punctuation
+#### options.removeOriginalUnmatchedMeta
+Type: `Boolean`
+Default value: `false`
+
+Should we remove original metadata tags before running the task?
+
+#### options.files
 Type: `String`
-Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  gconfig: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  gconfig: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+Targeted files by the task. For more details check out [grunt files][grunt.files]
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-_(Nothing yet)_
+## TODO
+- Use `colors` for terminal output.
+- Add examples
+- Refactor main task!
+
+[gconfig]: https://github.com/goliatone/gconfig
+[grunt.files]: http://gruntjs.com/configuring-tasks#files
+[grunt.config]: http://gruntjs.com/api/grunt.config#grunt.config.get

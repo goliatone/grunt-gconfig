@@ -1,0 +1,16 @@
+{
+	"platform": {
+		"ip": "localhost",
+		"port": "9000",
+		"endpoint": "api/v3",
+		"exhibitid":"2a3adadf"
+	},
+	"client": {
+		"endpoint": "ws://@{platform.ip}:@{platform.port}/@{platform.endpoint}"
+	},
+	"api": {
+		"url": "http://@{platform.ip}:@{platform.port}/exhibits/control",
+		"id": "@{platform.exhibitid}",
+		"action": "next"
+	}
+}
