@@ -5,9 +5,8 @@
 > Grunt task for generating HTML metadata configuration options for gconfig
 
 ## GConfig
-[GConfig][1] is a simple configuration management library.
+[GConfig][1] is a simple configuration management library. This task provides a way to manage environment aware configuration options.
 
-[1]:(https://github.com/goliatone/gconfig)
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
@@ -32,18 +31,32 @@ In your project's Gruntfile, add a section named `gconfig` to the data object pa
 grunt.initConfig({
   gconfig: {
     options: {
-      // Task-specific options go here.
+      files: [
+        {
+          expand: true,    // Enable dynamic expansion.
+          cwd: 'app/',     // Src matches are relative to this path.
+          src: ['*.html'], // Actual pattern(s) to match.
+          dest: '.tmp/'    // Destination path prefix.
+        },
+      ]
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    dev:{
+      filepath:'app/data/gconfig.dev.json',
+      removeOriginalUnmatchedMeta:true
     },
-  },
-})
+    int:{
+      filepath:'app/data/gconfig.int.json'
+    },
+    dist:{
+      filepath:'app/data/gconfig.dist.json'
+    }
+  }
+});
 ```
 
 ### Options
 
-#### options.separator
+#### options.files
 Type: `String`
 Default value: `',  '`
 
@@ -91,5 +104,9 @@ grunt.initConfig({
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-_(Nothing yet)_
+## TODO
+- Use `colors` for terminal output.
+- Add examples
+- Refactor main task!
+
+[1]:(https://github.com/goliatone/gconfig)
